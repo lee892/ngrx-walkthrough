@@ -1,11 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
+import { BooksActions } from './books.actions';
 
-import { BooksApiActions } from './books.actions';
-import { Book } from '../book-list/books.model';
+export const initialState: ReadonlyArray<string> = [];
 
-export const initialState: ReadonlyArray<Book> = [];
-
-export const booksReducer = createReducer(
+export const collectionReducer = createReducer(
   initialState,
-  on(BooksApiActions.retrievedBookList, (_state, { books }) => books)
+  on(BooksActions.removeBook, (state, { bookId }) =>
+    state.filter((id) => id !== bookId)
+  ),
+  on(BooksActions.addBook, (state, { bookId }) => {
+    if (state.indexOf(bookId) > -1) return state;
+
+    return [...state, bookId];
+  })
 );

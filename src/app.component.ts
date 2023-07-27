@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { selectBookCollection, selectBooks } from './state/books.selectors';
 import { BooksActions, BooksApiActions } from './state/books.actions';
-import { GoogleBooksService } from './book-list/books.service';
+import { GoogleBooksService } from './book-list/book.service';
 
 @Component({
   selector: 'app-root',
