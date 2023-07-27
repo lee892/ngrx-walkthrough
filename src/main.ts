@@ -1,21 +1,25 @@
-import 'zone.js/dist/zone';
-import { Component } from '@angular/core';
+import './polyfills';
+
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
 import { AppModule } from './app.module';
-import { bootstrapApplication } from '@angular/platform-browser';
 
-@Component({
-  selector: 'my-app',
-  standalone: true,
-  imports: [AppModule],
-  template: `
-    <h1>Hello from {{name}}!</h1>
-    <a target="_blank" href="https://angular.io/start">
-      Learn more about Angular 
-    </a>
-  `,
-})
-export class App {
-  name = 'Angular';
-}
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .then((ref) => {
+    // Ensure Angular destroys itself on hot reloads.
+    if (window['ngRef']) {
+      window['ngRef'].destroy();
+    }
+    window['ngRef'] = ref;
 
-bootstrapApplication(App);
+    // Otherwise, log the boot error
+  })
+  .catch((err) => console.error(err));
+
+
+/*
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://github.com/ngrx/platform
+*/
